@@ -253,6 +253,17 @@ static id FRInitNibWithCodder(id self, SEL _cmd, NSCoder *coder) {
 						 [object isKindOfClass:[UIScrollView class]]) {
 					// nothing to loacalize
 				}
+        else if ([[object superview] isKindOfClass:[UIScrollView class]]) {
+          UIView *objectSuperviewSuperview = [[object superview] superview];
+          if ([objectSuperviewSuperview isKindOfClass:[UITableViewCell class]]) {
+            [localizeSubviews addObjectsFromArray:[object subviews]];
+            [localizeSubviews removeObject:object];
+          }
+        }
+        else if ([[object superview] isKindOfClass:[UITableView class]]) {
+          [localizeSubviews addObjectsFromArray:[object subviews]];
+          [localizeSubviews removeObject:object];
+        }
 				else if ([object class] == [UIView class]) {
 					// empty views have nothing to localize
 				}
